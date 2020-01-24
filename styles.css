@@ -6,10 +6,6 @@ ul {
   background-color: #223;
 }
 
-ul {
-  background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet); 
-}
-
 li {
   float: left;
 }
