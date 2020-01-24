@@ -3,10 +3,10 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #323;
+  background-color: #223;
 }
 
-{
+ul {
   background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet); 
 }
 
