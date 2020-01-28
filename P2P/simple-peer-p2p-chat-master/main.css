@@ -1,0 +1,19 @@
+body {
+	font-family: sans-serif;
+	box-sizing: border-box;
+}
+
+p {
+	margin: 0;
+}
+
+#lines {
+	height: 200px;
+	overflow: hidden;
+	overflow-y: auto;
+	border: 1px solid #AAA;
+}
+
+input {
+	width: 100%;
+}
