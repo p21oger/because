@@ -16,11 +16,11 @@ li a {
   padding: 0px 42px;
   text-decoration: none;
 }
-li.secret {
+li secret {
   color:green
 }
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {
-  background-image: linear-gradient(to right, red, green); 
+  background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); 
 }
