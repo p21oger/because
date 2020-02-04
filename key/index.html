@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <h1>Key Logs</h1>
+
+    <input type="password" id = "text">
+    <p id="demo"></p>
+    <button onclick="records()">Submit</button>
+
+<script>
+
+var buffer = [] ;
+var oldstroke = new Object();
+var newstroke = new Object();
+var downbuffer =[];
+var upbuffer =[];
+
+
+var records=function()
+{
+  var obj;
+  var output_line = "";
+  for(i = 0; i < buffer.length; i++){
+  	obj = buffer[i];
+  	output_line = output_line.concat(obj.time+", "+obj.kftime+", "+obj.ftime+", ");
+  }
+  // localStorage.setItem("keylogs", JSON.stringify(buffer));
+  // console.log(localStorage.getItem("keylogs"));
+  console.log(output_line.slice(0,-2));
+  document.getElementById("text").value = ""
+}
+
+document.getElementById("text").onkeydown = function(e) {
+
+
+    var timestamp = Date.now() | 0;
+    var stroke = {
+        key: e.key,
+        time: timestamp
+
+    };
+    
+    if(stroke["key"] == "Backspace")
+    {   
+        
+        buffer = [];
+        downbuffer=[];
+        upbuffer=[];
+        document.getElementById("text").value = "";
+    }
+
+
+
+    else if(stroke["key"] == "Enter"){
+    	records()
+    }
+
+    else if(stroke["key"] != "Shift" && stroke["key"] != "CapsLock"){
+
+        downbuffer.push(stroke);
+        
+    }
+
+}
+
+
+
+
+document.getElementById("text").onkeyup = function(e) {
+ 
+    var timestamp = Date.now() | 0;
+    var stroke = {
+        key: e.key,
+        time: timestamp
+    };
+
+    
+    if(stroke["key"] == "Backspace")
+    {
+        buffer = [];
+        document.getElementById("text").value = "";
+    }
+    else if(stroke["key"] != "Enter" && stroke["key"] != "Shift")
+    {
+        upbuffer.push(stroke);
+        var up = upbuffer.shift();
+        var down = downbuffer.shift();
+        /*
+        ft   = flight time
+        kft = key press plus flight time
+        time = key press time
+        */
+
+    
+        var ftime=-(oldstroke.time-down.time);
+        if (ftime<0)
+        {
+            ftime=0;
+        }
+        if (buffer.length==0)
+        {
+            ftime=null;
+        }
+
+        oldstroke=up;
+
+        var time = up.time-down.time;
+        var kftime=ftime+time;
+        var stroke=new Object();
+        
+        stroke.key=down.key;
+        stroke.kftime=kftime;
+       
+        stroke.time=time;
+        stroke.ftime=ftime;
+    
+        buffer.push(stroke);
+        
+
+
+    }
+
+
+    window.setInterval(function(){
+
+        document.getElementById("demo").innerHTML = JSON.stringify(buffer);
+
+    }, 1000);
+
+}
+
+
+
+
+
+</script>
+</body>
+</html>
